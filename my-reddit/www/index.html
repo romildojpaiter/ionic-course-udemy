@@ -10,6 +10,8 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/angular-moment/angular-moment.js"></script>
     <script src="cordova.js"></script>
     <script src="js/app.js"></script>
 
@@ -23,11 +25,12 @@
       <ion-content>
         <div class="list">
           <a class="item item-thumbnail-left "
-          href="{{story.url}}" target="_blank"
-          ng-repeat="story in stories">
+            href="{{story.url}}" target="_blank" ng-repeat="story in stories">
             <img src="{{story.thumbnail}}" ng-if="story.thumbnail.startsWith('http')" />
             <h2 class="story-title">{{story.title}}</h2>
-            <p>{{story.domain}}</p>
+            <p>
+              <span am-time-ago="story.created_utc" am-preprocess="unix"></span> - {{story.domain}}
+            </p>
           </a>
         </div>
       </ion-content>
