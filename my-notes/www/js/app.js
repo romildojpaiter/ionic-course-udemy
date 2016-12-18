@@ -33,6 +33,10 @@
         }
     }
 
+    function createNote(note) {
+        notes.push(note);
+    }
+
     app.config(function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('list', {
             url: '/list',
@@ -40,9 +44,28 @@
         });
         $stateProvider.state('edit', {
             url: '/edit/:noteId',
-            templateUrl: 'templates/edit.html'
+            templateUrl: 'templates/edit.html',
+            controller: 'EditCtrl'
+        });
+        $stateProvider.state('add', {
+            url: '/add',
+            templateUrl: 'templates/edit.html',
+            controller: 'AddCtrl'
         });
         $urlRouterProvider.otherwise('/list');
+    });
+
+    app.controller('AddCtrl', function($scope, $state) {
+        $scope.note = {
+            id: new Date().getTime().toString(),
+            title: '',
+            description: ''
+        };
+
+        $scope.save = function() {
+            createNote($scope.note);
+            $state.go('list');
+        };
     });
 
     app.controller('EditCtrl', function($scope, $state) {
@@ -52,7 +75,6 @@
             updateNote($scope.note);
             $state.go('list');
         };
-
     });
 
     app.controller('ListCtrl', function($scope) {
