@@ -11,6 +11,11 @@ angular.module('mynotes.notestore', [])
         list: function() {
             return notes;
         },
+        move: function(note, fromIndex, toIndex) {
+            notes.splice(fromIndex, 1);
+            notes.splice(toIndex, 0, note);
+            persist();
+        },
         get: function(noteId) {
             for (var i = 0; i < notes.length; i++) {
                 if (notes[i].id === noteId) {
