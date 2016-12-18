@@ -10,7 +10,11 @@
           .success(function(response){
             var stories = [];
             angular.forEach(response.data.children, function(child) {
-              $scope.stories.push(child.data);
+                var story = child.data;
+                if (!story.thumbnail || story.thumbnail === 'self') {
+                    story.thumbnail = 'http://www.redditstatic.com/icon.png';
+                }
+                $scope.stories.push(child.data);
             });
             callback(stories);
         });
@@ -32,7 +36,11 @@
         loadStories(params, function(newStories) {
             $scope.stories = newStories.concat($scope.stories);
             $scope.$broadcast('scroll.refreshComplete');
-        })
+        });
+    };
+
+    $scope.openLink = function(url) {
+        window.open(url, '_blank');
     };
 
   });
@@ -42,6 +50,9 @@
       if(window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
+      }
+      if (window.cordova && window.cordova.InAppBrowser) {
+        window.open = window.cordova.InAppBrowser.open;
       }
       if(window.StatusBar) {
         StatusBar.styleDefault();
