@@ -2,12 +2,11 @@
 
   var app = angular.module('app', ['ionic']);
 
-  app.controller('DeviceCtrl', function() {
+  app.controller('DeviceCtrl', function($scope, $cordovaDevice, $ionicPlatform) {
 
-    document.addEventListener('deviceready', function() {
-      console.log('device is ' + angular.toJson(device));
+    $ionicPlatform.ready('deviceready', function($scope, $cordovaDevice) {
       $scope.$apply(function(){
-        $scope.device = device;
+        $scope.device = $cordovaDevice.getDevice();
       });
     });
 
