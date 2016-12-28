@@ -1,7 +1,7 @@
 
 (function() {
 
-  var app = angular.module('app', ['ionic']);
+  var app = angular.module('app', ['ionic', 'ngCordova']);
 
   app.controller('AppCtrl', function($scope, $timeout) {
 
